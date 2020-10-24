@@ -297,3 +297,12 @@ web-build/
 app.json
 .env
 env
+firebase
+firebase.js
+firebaseCOnfig.js
+firebaseConfig.js
+config
+/config
+/config/firebaseConfig
+/client/src/config/firebaseConfig
+firebaseConfig.js
