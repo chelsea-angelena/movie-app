@@ -17,12 +17,24 @@ const customFonts = {
 };
 
 function App() {
+	const [user, setUser] = useState(null);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		let user = await db.checkAuth(user);
+		setUser(user);
+		setLoading(false)
+	}, []);
+
 	let [fontsLoaded] = useFonts({
 		'Montserrat-Light': require('./assets/Montserrat/Montserrat-Light.ttf'),
 	});
 	let colorScheme = useColorScheme();
 	if (!fontsLoaded) {
 		return <AppLoading />;
+	}
+	if (loading){
+		return null
 	}
 	return (
 		<>
