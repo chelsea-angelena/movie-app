@@ -9,7 +9,7 @@ import NomineeMylist from '../screens/NomineeMyList';
 const Stack = createStackNavigator();
 // const Tab = createBottomTabNavigator();
 
-function StackNav() {
+function StackNav({ user }) {
 	return (
 		<Stack.Navigator
 			mode='modal'
@@ -41,6 +41,7 @@ function StackNav() {
 			/>
 			<Stack.Screen
 				name='Modal'
+				user={user}
 				component={ModalScreen}
 				options={{ headerShown: false }}
 			/>

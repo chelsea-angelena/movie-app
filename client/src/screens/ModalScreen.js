@@ -13,13 +13,17 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import NomineeMyList from './NomineeMyList';
 import { Context as MovieContext } from '../Context/MovieContext';
-import API_KEY from '../../env';
+import { API_KEY } from '../../env';
 import colors from '../style/colors';
+import { UserContext } from '../Context/UserContext';
+import useAuth from '../hooks/useAuth';
+import * as db from '../../config/firebaseConfig';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
 function ModalScreen(props, { route }) {
+	const [user] = useAuth();
 	const [value, setValue] = useState('');
 	const [result, setResult] = useState(null);
 	const [movie, setMovie] = useState({});
@@ -27,27 +31,14 @@ function ModalScreen(props, { route }) {
 	const [button, setButton] = useState(true);
 	const { state, addMovie } = useContext(MovieContext);
 	let navigation = useNavigation();
-	console.log(state);
+
 	const id = props.route.params;
-	console.log(id, 'modal route id');
-
+	console.log(id, 'id');
+	const userId = user.uid;
 	let imdbID = id.movieItemId.id;
-
-	// let saveData =	{
-	// 	imageUri: data.Poster,
-	// 	title: data.Title,
-	// 	id: data.imbdId,
-	// }
-
-	// let buttonState = async () => {
-	// 	await state.map((movie) =>
-	// 		movie.id === imdbID ? setButton(false) : setButton(true)
-	// 	);
-	// };
-
-	console.log(movie, 'movie');
 	console.log(imdbID);
-
+	let movieId = id.movieItemId.id;
+	console.log(movieId, 'Id');
 	const getResult = async (imdbID) => {
 		const response = await axios.get(
 			`http://www.omdbapi.com/?apikey=${API_KEY}&i=${imdbID}`
@@ -68,8 +59,7 @@ function ModalScreen(props, { route }) {
 	if (!result) {
 		return null;
 	}
-	let data = result;
-
+let data = result
 	// const submitButton = () => {
 	// 	state.filter((movie) => movie.id === imdbId)
 	// 		? setButton(false)
@@ -91,11 +81,14 @@ function ModalScreen(props, { route }) {
 	// };
 
 	const onAddMovie = async () => {
+		await db.saveMovie(imdbID, movie, userId);
 		await addMovie(movie);
 		setButton(false);
 		navigation.navigate('MyList', NomineeMyList);
 	};
-
+	if (!user && !imdbID) {
+		return <Text>loading...</Text>;
+	}
 	if (loading) {
 		return null;
 	} else {

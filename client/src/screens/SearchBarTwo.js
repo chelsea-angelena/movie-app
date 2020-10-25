@@ -5,7 +5,7 @@ import axios from 'axios';
 import DataList from '../components/searchscreen/DataList';
 import Screen from '../components/styled/Screen.js';
 import { useColorScheme } from 'react-native-appearance';
-import API_KEY from '../../env';
+import { API_KEY } from '../../env';
 import colors from '../style/colors';
 
 const introTitle = 'Welcome to the OMDB Movie Nominations!';
@@ -48,7 +48,7 @@ const MySearchBar = () => {
 			>
 				<ScrollView>
 					<SearchBar
-						inputContainerStyle={{ borderColor: colors.black }}
+						style={{ borderColor: colors.black }}
 						placeholder='Type Here to Search...'
 						onChangeText={updateSearch}
 						value={searchTerm}
@@ -58,7 +58,7 @@ const MySearchBar = () => {
 						<Button
 							onPress={submitSearch}
 							title='Submit'
-							buttonStyle={styles.button}
+							style={styles.button}
 						/>
 					) : (
 						<>

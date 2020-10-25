@@ -13,7 +13,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
-export default function TabNav() {
+export default function TabNav({ user }) {
 	return (
 		<Tab.Navigator
 			activeTintColor='blue'
@@ -28,6 +28,7 @@ export default function TabNav() {
 		>
 			<Tab.Screen
 				name='Search'
+				user={user}
 				component={StackNav}
 				options={{
 					tabBarLabel: 'Search',

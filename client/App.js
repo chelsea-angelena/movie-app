@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNav from './src/navigation/TabNav';
 import { navigationRef } from './RootNavigation';
@@ -11,21 +11,18 @@ import { AppLoading } from 'expo';
 import { useFonts } from 'expo-font';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
+import AuthStack from './src/navigation/AuthStack';
+import * as db from './config/firebaseConfig';
+import useAuth from './src/hooks/useAuth';
 
 const customFonts = {
 	'Montserrat-Light': require('./assets/Montserrat/Montserrat-Light.ttf'),
 };
 
+export const UserContext = React.createContext();
+
 function App() {
-	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		let user = await db.checkAuth(user);
-		setUser(user);
-		setLoading(false)
-	}, []);
-
+	let [user, loading] = useAuth();
 	let [fontsLoaded] = useFonts({
 		'Montserrat-Light': require('./assets/Montserrat/Montserrat-Light.ttf'),
 	});
@@ -33,18 +30,20 @@ function App() {
 	if (!fontsLoaded) {
 		return <AppLoading />;
 	}
-	if (loading){
-		return null
+	if (loading) {
+		return null;
 	}
 	return (
 		<>
-			<ThemeProvider useDark={colorScheme === 'dark'}>
-				<MovieProvider>
-					<NavigationContainer ref={navigationRef}>
-						<TabNav />
-					</NavigationContainer>
-				</MovieProvider>
-			</ThemeProvider>
+			<UserContext.Provider user={user}>
+				<ThemeProvider useDark={colorScheme === 'dark'}>
+					<MovieProvider>
+						<NavigationContainer ref={navigationRef}>
+							{!user ? <AuthStack /> : <TabNav user={user} />}
+						</NavigationContainer>
+					</MovieProvider>
+				</ThemeProvider>
+			</UserContext.Provider>
 		</>
 	);
 }

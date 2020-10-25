@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import API_KEY from '../../../env.js';
+import {API_KEY} from '../../../env.js';
 
 export default function useResults() {
 	const [results, setResults] = useState([]);

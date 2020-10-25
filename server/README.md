@@ -1,1 +1,0 @@
-# rn-express-api-mongo

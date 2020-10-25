@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
+import { API_Key } from '.././../env';
 
 export default function useMovieData() {
-
 	const [search, setSearch] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
