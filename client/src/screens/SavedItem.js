@@ -1,22 +1,17 @@
 import React from 'react';
 import { Image } from 'react-native-elements';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
 import * as db from '../../config/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 const SavedItem = ({ item, userId }) => {
 	const { id, imageUri, title } = item;
-
-	console.log(userId, 'userId');
 	let movieId = id;
-	console.log(movieId, 'movieId');
 	const navigation = useNavigation();
 
 	const deleteMovie = async () => {
 		await db.deleteMovieItem(userId, movieId, navigation);
+		navigation.navigate('MyList');
 	};
 	return (
 		<View style={styles.view}>
@@ -43,12 +38,18 @@ const styles = StyleSheet.create({
 		// width: '100%',
 		// flex: 2,
 		marginTop: 24,
+		borderColor: 'white',
+		borderWidth: 0.5,
+		borderStyle: 'solid',
+		padding: 16,
+		textAlign: 'center',
 	},
 	text: {
 		color: 'white',
 		fontSize: 24,
 		alignSelf: 'center',
 		fontWeight: 'bold',
+		paddingBottom: 16,
 	},
 	image: {
 		width: 300,

@@ -61,11 +61,7 @@ const MySearchBar = () => {
 				/>
 				<Text>{searchTerm}</Text>
 				{searchTerm ? (
-					<Button
-						onPress={submitSearch}
-						title='Submit'
-						buttonStyle={styles.button}
-					/>
+					<Button onPress={submitSearch} title='Submit' style={styles.button} />
 				) : (
 					<>
 						<Text style={styles.text}>Welcome to the OMDB movie Search!</Text>

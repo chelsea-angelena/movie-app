@@ -10,7 +10,7 @@ import ErrorMessage from './ErrorMessage';
 import * as db from '../../../config/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../Context/AuthContext';
-
+// import Logo from '../../Atoms/Logo';
 import colors from '../../styles/colors';
 
 const validationSchema = Yup.object().shape({
@@ -59,6 +59,7 @@ const SignInScreen = () => {
 				}}
 			>
 				<View style={styles.container}>
+					{/* <Logo /> */}
 					<Formik
 						initialValues={{ email: '', password: '' }}
 						onSubmit={(values) => {
@@ -117,7 +118,7 @@ const SignInScreen = () => {
 							</>
 						)}
 					</Formik>
-					{/* <SignInWithGoogle /> */}
+
 					<Button
 						title="Don't have an account? Sign Up"
 						onPress={goToSignup}
@@ -137,6 +138,7 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.grey,
 		paddingTop: 15,
 		height: 1000,
+		marginTop: 64,
 	},
 	buttonContainer: {
 		margin: 25,

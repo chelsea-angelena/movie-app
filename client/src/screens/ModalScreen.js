@@ -5,9 +5,10 @@ import {
 	FlatList,
 	TouchableOpacity,
 	View,
+	Text,
 	ScrollView,
 } from 'react-native';
-import { Button, Text, Card, Image } from 'react-native-elements';
+import { Button, Card, Image } from 'react-native-elements';
 import { Dimensions } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -29,7 +30,7 @@ function ModalScreen(props, { route }) {
 	const [loading, setLoading] = useState(true);
 	const [button, setButton] = useState(true);
 	// const { state, addMovie } = useContext(MovieContext);
-	const { state, saveMovie } = useContext(MovieListContext);
+	// const {saveMovie } = useContext(MovieListContext);
 	let navigation = useNavigation();
 
 	const id = props.route.params;
@@ -61,30 +62,9 @@ function ModalScreen(props, { route }) {
 		return null;
 	}
 	let data = result;
-	// const submitButton = () => {
-	// 	state.filter((movie) => movie.id === imdbId)
-	// 		? setButton(false)
-	// 		: setButton(true);
-	// };
-
-	// const onAddMovie = ({ listItem }) => {
-	// 	addMovie({ listItem });
-	// 	console.log(listItem);
-	// };
-
-	// const onAddMovie = ({ imdbID }) => {
-	// 	addMovie(imdbID);
-	// 	// navigation.navigate('List');
-	// };
-	// const dispatch = useDispatch();
-	// const onSave = (value) => {
-	// 	dispatch(setMovie(value));
-	// };
-
 	const onAddMovie = async () => {
-		// await db.saveMovie(imdbID, movie, userId);
-		await saveMovie(imdbID, movie, userId);
-		// await saveMovie(movie);
+		// await saveMovie(imdbID, movie, userId);
+		await db.saveMovie(imdbID, movie, userId);
 		setButton(false);
 		navigation.navigate('MyList');
 	};
@@ -137,16 +117,12 @@ function ModalScreen(props, { route }) {
 				<View style={styles.buttonContainer}>
 					{!button ? (
 						<Button
-							buttonStyle={styles.button}
+							style={styles.button}
 							title='Already Selected'
 							onPress={() => Alert.alert('already Nominated')}
 						/>
 					) : (
-						<Button
-							title='Select'
-							buttonStyle={styles.button}
-							onPress={onAddMovie}
-						/>
+						<Button title='Select' style={styles.button} onPress={onAddMovie} />
 					)}
 				</View>
 			</ScrollView>

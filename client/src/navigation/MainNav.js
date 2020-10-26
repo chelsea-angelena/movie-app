@@ -7,7 +7,7 @@ import TabNav from './TabNav';
 import AuthStack from './AuthStack';
 
 export default function MainNav() {
-	const  user  = useContext(AuthContext);
+	const user = useContext(AuthContext);
 	return (
 		<NavigationContainer>
 			{!!user ? <TabNav /> : <AuthStack />}

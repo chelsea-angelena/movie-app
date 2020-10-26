@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Provider as MovieProvider } from './src/Context/MovieContext';
 import { AuthProvider } from './src/Context/AuthContext';
 import { AuthContext } from './src/Context/AuthContext';
-import { Provider as MovieListProvider } from './src/Context/MovieListContext';
+// import { Provider as MovieListProvider } from './src/Context/MovieListContext';
 // import { Platform } from 'react-native';
 import { Button, colors, ThemeProvider } from 'react-native-elements';
 import { Text } from 'react-native';
@@ -21,7 +21,7 @@ const customFonts = {
 };
 
 function App() {
-	
+
 	let [fontsLoaded] = useFonts({
 		'Montserrat-Light': require('./assets/Montserrat/Montserrat-Light.ttf'),
 	});
@@ -36,9 +36,9 @@ function App() {
 			<AuthProvider>
 				<ThemeProvider useDark={colorScheme === 'dark'}>
 					<MovieProvider>
-						<MovieListProvider>
+						{/* <MovieListProvider> */}
 							<MainNav />
-						</MovieListProvider>
+						{/* </MovieListProvider> */}
 					</MovieProvider>
 				</ThemeProvider>
 			</AuthProvider>
@@ -46,21 +46,3 @@ function App() {
 	);
 }
 export default App;
-
-// const Stack = createStackNavigator();
-
-// const StackNav = () => {
-// 	return (
-// 		<>
-// 			<Stack.Navigator>
-// 				<Stack.Screen name='Search' component={MySearchBar} />
-// 				<Stack.Screen name='Results' component={ResultList} />
-// 			</Stack.Navigator>
-// 		</>
-// 	);
-// };
-// const TabNav = () => {
-// 	return (
-
-// 	)
-// }

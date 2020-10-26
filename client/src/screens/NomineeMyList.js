@@ -30,6 +30,7 @@ export default function MyList({ route, navigation }) {
 	const userId = user.uid;
 	console.log(user);
 	console.log(userId);
+
 	const getSavedMovieList = async () => {
 		try {
 			let response = await db.getSavedMovies(userId);
@@ -56,6 +57,7 @@ export default function MyList({ route, navigation }) {
 				}}
 			>
 				<Text style={styles.text}>{indexTitle}</Text>
+
 				<FlatList
 					data={movieList}
 					keyExtractor={(state) => state.id}
@@ -79,9 +81,10 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		color: 'white',
-		fontSize: 24,
+		fontSize: 32,
 		alignSelf: 'center',
 		fontWeight: 'bold',
+		marginTop: 32,
 	},
 	image: {
 		width: 300,
