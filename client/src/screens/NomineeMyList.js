@@ -1,36 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Image, Button, Card } from 'react-native-elements';
 import {
 	ImageBackground,
 	SafeAreaView,
-	ScrollView,
-	View,
 	Text,
-	TouchableOpacity,
 	StyleSheet,
 	FlatList,
 } from 'react-native';
-import { Context as MovieListContext } from '../Context/MovieListContext';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import useAuth from '../hooks/useAuth';
 import * as db from '../../config/firebaseConfig';
 import SavedItem from './SavedItem';
 import { AuthContext } from '../Context/AuthContext';
 let indexTitle = 'My Saved Movies';
 import { Dimensions } from 'react-native';
 
-const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export default function MyList({ route, navigation }) {
-	// const { state } = useContext(MovieContext);
 	const [movieList, setMovieList] = useState([]);
-	// const { state } = useContext(MovieListContext);
 	const user = useContext(AuthContext);
 	const userId = user.uid;
-	console.log(user);
-	console.log(userId);
-
 	const getSavedMovieList = async () => {
 		try {
 			let response = await db.getSavedMovies(userId);
@@ -72,12 +59,10 @@ export default function MyList({ route, navigation }) {
 
 const styles = StyleSheet.create({
 	view: {
-		// flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
 		width: '100%',
 		height: windowHeight,
-		// flex: 2,
 	},
 	text: {
 		color: 'white',

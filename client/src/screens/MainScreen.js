@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-	StyleSheet,
-	SafeAreaView,
-	ImageBackground,
-	View,
-	Text,
-} from 'react-native';
+import { StyleSheet, SafeAreaView, ImageBackground, View } from 'react-native';
 import MySearchBar from './SearchBarTwo';
 
 export default function MainScreen() {

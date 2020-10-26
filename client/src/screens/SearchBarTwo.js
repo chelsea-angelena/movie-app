@@ -1,27 +1,19 @@
-import React, { Component, useEffect, useState } from 'react';
-import {
-	View,
-	Text,
-	ScrollView,
-	StyleSheet,
-	ImageBackground,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { SearchBar, Button } from 'react-native-elements';
 import axios from 'axios';
 import DataList from '../components/searchscreen/DataList';
-import Screen from '../components/styled/Screen.js';
-import { useColorScheme } from 'react-native-appearance';
+// import { useColorScheme } from 'react-native-appearance';
 import { API_KEY } from '../../env';
 import colors from '../style/colors';
-
-const introTitle = 'Welcome to the OMDB Movie Nominations!';
 
 const MySearchBar = () => {
 	const [searchInput, setSearchInput] = useState('');
 	const [searchTerm, setSearchTerm] = useState('');
 	const [results, setResults] = useState([]);
 	const [error, setError] = useState('');
-	let colorScheme = useColorScheme();
+	// let colorScheme = useColorScheme();
+
 	const updateSearch = (searchTerm) => {
 		setSearchTerm(searchTerm);
 	};
@@ -37,11 +29,6 @@ const MySearchBar = () => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	setSearchTerm('');
-	// 	submitSearch();
-	// }, []);
-
 	return (
 		<View style={styles.view}>
 			<ImageBackground
@@ -52,7 +39,6 @@ const MySearchBar = () => {
 						'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
 				}}
 			>
-				{/* <ScrollView> */}
 				<SearchBar
 					style={{ borderColor: colors.black }}
 					placeholder='Type Here to Search...'
@@ -72,7 +58,6 @@ const MySearchBar = () => {
 				)}
 				<Text>{searchInput}</Text>
 				{results ? <DataList results={results} /> : null}
-				{/* </ScrollView> */}
 			</ImageBackground>
 		</View>
 	);

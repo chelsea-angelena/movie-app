@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { API_Key } from '.././../env';
 
 export default function useMovieData() {
-	const [search, setSearch] = useState([]);
+
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
 
@@ -21,7 +21,6 @@ export default function useMovieData() {
 	};
 
 	useEffect(() => {
-		// setSearchTerm('Last Unicorn');
 		submitSearch();
 	}, []);
 	return [search, loading, error, submitSearch];

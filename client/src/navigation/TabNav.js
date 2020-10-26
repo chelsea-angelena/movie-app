@@ -1,8 +1,5 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-// import { createStackNavigator } from '@react-navigation/stack';
-// import StackNav from './StackNav';
-// import MyList from '../screens/NomineeMyList';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import StackNav from './StackNav';
@@ -11,7 +8,6 @@ import { Feather } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import LogOut from './LogOut.js';
 
-const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 export default function TabNav({ user }) {

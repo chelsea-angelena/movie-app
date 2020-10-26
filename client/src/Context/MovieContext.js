@@ -25,21 +25,6 @@ const addMovie = (dispatch) => {
 	};
 };
 
-// const addMovie = (dispatch) => {
-// 	return async (movie, callback) => {
-// 		try {
-// 			await axios.post('/movies', movie);
-// 			dispatch({
-// 				type: 'add_movie',
-// 				payload: { movie: movie },
-// 			});
-// 			callback();
-// 		} catch (e) {
-// 			console.log(e);
-// 		}
-// 	};
-// };
-
 const deleteMovie = (dispatch) => {
 	return (id) => {
 		dispatch({ type: 'delete_movie', payload: id });

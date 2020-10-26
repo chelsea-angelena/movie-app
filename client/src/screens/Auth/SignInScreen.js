@@ -10,7 +10,6 @@ import ErrorMessage from './ErrorMessage';
 import * as db from '../../../config/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../Context/AuthContext';
-// import Logo from '../../Atoms/Logo';
 import colors from '../../styles/colors';
 
 const validationSchema = Yup.object().shape({

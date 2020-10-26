@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {API_KEY} from '../../../env.js';
+import { API_KEY } from '../../../env.js';
 
 export default function useResults() {
 	const [results, setResults] = useState([]);
@@ -20,17 +20,6 @@ export default function useResults() {
 			setError('');
 		}
 	};
-
-	// let searchApi = async () => {
-	// 	try {
-	// 		let response = await axios.get(API_URL);
-	// 		console.log(response.data);
-	// 		setLoading(false);
-	// 		setMovieData(response.data);
-	// 	} catch (err) {
-	// 		setError('');
-	// 	}
-	// };
 
 	useEffect(() => {
 		searchApi('Batman');

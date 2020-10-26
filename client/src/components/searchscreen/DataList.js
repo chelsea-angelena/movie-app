@@ -1,19 +1,11 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../../Context/AuthContext';
-import {
-	TouchableOpacity,
-	SafeAreaView,
-	View,
-	Text,
-	FlatList,
-} from 'react-native';
+import React from 'react';
+import { TouchableOpacity, View, Text, FlatList } from 'react-native';
 import ListItem from './ListItem';
 import { useNavigation } from '@react-navigation/native';
-import colors from '../../styles/colors';
 
 const DataList = ({ results }) => {
 	const navigation = useNavigation();
-	const user = useContext(AuthContext);
+
 	return (
 		<View>
 			<Text> List Page</Text>
@@ -34,7 +26,6 @@ const DataList = ({ results }) => {
 						>
 							<ListItem
 								item={item}
-								result={item}
 								id={item.imdbID}
 								title={item.Title}
 								year={item.Year}

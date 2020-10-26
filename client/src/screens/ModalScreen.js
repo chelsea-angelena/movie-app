@@ -1,19 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {
-	Alert,
-	StyleSheet,
-	FlatList,
-	TouchableOpacity,
-	View,
-	Text,
-	ScrollView,
-} from 'react-native';
-import { Button, Card, Image } from 'react-native-elements';
+import { Alert, StyleSheet, View, Text, ScrollView } from 'react-native';
+import { Button, Card } from 'react-native-elements';
 import { Dimensions } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-import NomineeMyList from './NomineeMyList';
-import { Context as MovieListContext } from '../Context/MovieListContext';
 import { API_KEY } from '../../env';
 import colors from '../style/colors';
 import { AuthContext } from '../Context/AuthContext';
@@ -24,28 +14,20 @@ const screenHeight = Math.round(Dimensions.get('window').height);
 
 function ModalScreen(props, { route }) {
 	const user = useContext(AuthContext);
-	const [value, setValue] = useState('');
 	const [result, setResult] = useState(null);
 	const [movie, setMovie] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [button, setButton] = useState(true);
-	// const { state, addMovie } = useContext(MovieContext);
-	// const {saveMovie } = useContext(MovieListContext);
-	let navigation = useNavigation();
-
+	const navigation = useNavigation();
 	const id = props.route.params;
-	console.log(id, 'id');
 	const userId = user.uid;
 	let imdbID = id.movieItemId;
-	console.log(userId, 'iuserId');
-	console.log(imdbID, 'imdbID');
-	let movieId = id.movieItemId.id;
-	console.log(movieId, 'Id');
+	// let movieId = id.movieItemId.id;
+
 	const getResult = async (imdbID) => {
 		const response = await axios.get(
 			`http://www.omdbapi.com/?apikey=${API_KEY}&i=${imdbID}`
 		);
-		console.log(response);
 		setResult(response.data);
 		setMovie({
 			imageUri: response.data.Poster,
@@ -63,7 +45,6 @@ function ModalScreen(props, { route }) {
 	}
 	let data = result;
 	const onAddMovie = async () => {
-		// await saveMovie(imdbID, movie, userId);
 		await db.saveMovie(imdbID, movie, userId);
 		setButton(false);
 		navigation.navigate('MyList');
@@ -71,7 +52,7 @@ function ModalScreen(props, { route }) {
 	if (!user && !imdbID) {
 		return <Text>loading...</Text>;
 	}
-	if (!movie) {
+	if (!movie || loading) {
 		return null;
 	} else {
 		return (

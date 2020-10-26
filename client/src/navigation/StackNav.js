@@ -2,12 +2,11 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import ModalScreen from '../screens/ModalScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import MainScreen from '../screens/MainScreen';
 import NomineeMylist from '../screens/NomineeMyList';
 
 const Stack = createStackNavigator();
-// const Tab = createBottomTabNavigator();
 
 function StackNav({ user }) {
 	return (
