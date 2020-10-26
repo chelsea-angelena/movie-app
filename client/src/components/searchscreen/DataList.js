@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../../Context/AuthContext';
 import {
 	TouchableOpacity,
 	SafeAreaView,
@@ -12,7 +13,7 @@ import colors from '../../styles/colors';
 
 const DataList = ({ results }) => {
 	const navigation = useNavigation();
-	console.log(results.data);
+	const user = useContext(AuthContext);
 	return (
 		<View>
 			<Text> List Page</Text>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button } from 'react-native-elements';
@@ -9,6 +9,7 @@ import FormButton from './FormButton';
 import ErrorMessage from './ErrorMessage';
 import * as db from '../../../config/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../Context/AuthContext';
 
 import colors from '../../styles/colors';
 
@@ -25,22 +26,25 @@ const validationSchema = Yup.object().shape({
 
 const SignInScreen = () => {
 	const [submitting, setSubmitting] = useState(false);
-	const [user, setUser] = useState({});
+	const user = useContext(AuthContext);
 	const [error, setError] = useState(null);
 	const navigation = useNavigation();
 	const goToSignup = () => navigation.navigate('SignUpScreen');
 
 	const handleLogin = async (values) => {
 		const { email, password } = values;
-		try {
-			const response = await db.loginWithEmail(email, password);
-			if (response.user) {
-				setUser(response);
-			}
-		} catch (error) {
-			setError(error);
-			setSubmitting(false);
-		}
+		// try {
+		// const response =
+		await db.loginWithEmail(email, password);
+		// 	if (response.user) {
+		// 		setUser(response);
+		// 	} else if (error) {
+		// 		console.log('error');
+		// 	}
+		// } catch (error) {
+		// 	setError(error);
+		// 	setSubmitting(false);
+		// }
 	};
 
 	// const { passwordVisibility, rightIcon } = this.state;
@@ -59,7 +63,6 @@ const SignInScreen = () => {
 						initialValues={{ email: '', password: '' }}
 						onSubmit={(values) => {
 							handleLogin(values);
-							setSubmitting(true);
 						}}
 						validationSchema={validationSchema}
 					>
@@ -71,6 +74,7 @@ const SignInScreen = () => {
 							isValid,
 							touched,
 							handleBlur,
+
 							isSubmitting,
 						}) => (
 							<>

@@ -15,7 +15,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import useAuth from '../hooks/useAuth';
 import * as db from '../../config/firebaseConfig';
 import SavedItem from './SavedItem';
-import { UserContext } from '../Context/UserContext';
+import { AuthContext } from '../Context/AuthContext';
 let indexTitle = 'My Saved Movies';
 import { Dimensions } from 'react-native';
 
@@ -26,10 +26,10 @@ export default function MyList({ route, navigation }) {
 	// const { state } = useContext(MovieContext);
 	const [movieList, setMovieList] = useState([]);
 	// const { state } = useContext(MovieListContext);
-	const user = useContext(UserContext);
+	const user = useContext(AuthContext);
 	const userId = user.uid;
-	// const uid = user.uid;
-
+	console.log(user);
+	console.log(userId);
 	const getSavedMovieList = async () => {
 		try {
 			let response = await db.getSavedMovies(userId);

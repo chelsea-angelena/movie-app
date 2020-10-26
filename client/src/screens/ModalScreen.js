@@ -15,15 +15,14 @@ import NomineeMyList from './NomineeMyList';
 import { Context as MovieListContext } from '../Context/MovieListContext';
 import { API_KEY } from '../../env';
 import colors from '../style/colors';
-import { UserContext } from '../Context/UserContext';
-import useAuth from '../hooks/useAuth';
+import { AuthContext } from '../Context/AuthContext';
 import * as db from '../../config/firebaseConfig';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
 function ModalScreen(props, { route }) {
-	const [user] = useAuth();
+	const user = useContext(AuthContext);
 	const [value, setValue] = useState('');
 	const [result, setResult] = useState(null);
 	const [movie, setMovie] = useState({});
@@ -37,6 +36,7 @@ function ModalScreen(props, { route }) {
 	console.log(id, 'id');
 	const userId = user.uid;
 	let imdbID = id.movieItemId;
+	console.log(userId, 'iuserId');
 	console.log(imdbID, 'imdbID');
 	let movieId = id.movieItemId.id;
 	console.log(movieId, 'Id');
