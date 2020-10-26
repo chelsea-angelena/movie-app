@@ -26,7 +26,7 @@
 		"react": "~16.11.0",
 		"react-dom": "~16.11.0",
 		"react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
-		"react-native-elements": "^2.3.2",
+		"react-native-elements": "^3.0.0-alpha.1",
 		"react-native-gesture-handler": "~1.6.0",
 		"react-native-keyboard-aware-scroll-view": "^0.9.3",
 		"react-native-paper": "^4.2.0",
@@ -34,12 +34,13 @@
 		"react-native-safe-area-context": "~3.0.7",
 		"react-native-screens": "~2.9.0",
 		"react-native-vector-icons": "^7.1.0",
-		"react-native-web": "^0.13.13",
+		"react-native-web": "^0.14.4",
+		"react-scripts": "^4.0.0",
 		"yup": "^0.29.3"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.8.6",
-		"@babel/plugin-proposal-class-properties": "^7.10.4",
+		"@babel/plugin-proposal-class-properties": "^7.12.1",
 		"babel-preset-expo": "~8.1.0",
 		"customize-cra": "^1.0.0",
 		"react-app-rewired": "^2.1.6"

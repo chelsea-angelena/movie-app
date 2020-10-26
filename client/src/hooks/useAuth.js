@@ -2,6 +2,7 @@ import React, { useContext, createContext, useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import * as db from '../../config/firebaseConfig';
 
+
 export default function useAuth() {
 	// Handle user state changes
 	const [user, setUser] = useState({});

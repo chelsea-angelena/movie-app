@@ -12,7 +12,7 @@ import { Dimensions } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import NomineeMyList from './NomineeMyList';
-import { Context as MovieContext } from '../Context/MovieContext';
+import { Context as MovieListContext } from '../Context/MovieListContext';
 import { API_KEY } from '../../env';
 import colors from '../style/colors';
 import { UserContext } from '../Context/UserContext';
@@ -29,14 +29,15 @@ function ModalScreen(props, { route }) {
 	const [movie, setMovie] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [button, setButton] = useState(true);
-	const { state, addMovie } = useContext(MovieContext);
+	// const { state, addMovie } = useContext(MovieContext);
+	const { state, saveMovie } = useContext(MovieListContext);
 	let navigation = useNavigation();
 
 	const id = props.route.params;
 	console.log(id, 'id');
 	const userId = user.uid;
-	let imdbID = id.movieItemId.id;
-	console.log(imdbID);
+	let imdbID = id.movieItemId;
+	console.log(imdbID, 'imdbID');
 	let movieId = id.movieItemId.id;
 	console.log(movieId, 'Id');
 	const getResult = async (imdbID) => {
@@ -59,7 +60,7 @@ function ModalScreen(props, { route }) {
 	if (!result) {
 		return null;
 	}
-let data = result
+	let data = result;
 	// const submitButton = () => {
 	// 	state.filter((movie) => movie.id === imdbId)
 	// 		? setButton(false)
@@ -81,15 +82,16 @@ let data = result
 	// };
 
 	const onAddMovie = async () => {
-		await db.saveMovie(imdbID, movie, userId);
-		await addMovie(movie);
+		// await db.saveMovie(imdbID, movie, userId);
+		await saveMovie(imdbID, movie, userId);
+		// await saveMovie(movie);
 		setButton(false);
-		navigation.navigate('MyList', NomineeMyList);
+		navigation.navigate('MyList');
 	};
 	if (!user && !imdbID) {
 		return <Text>loading...</Text>;
 	}
-	if (loading) {
+	if (!movie) {
 		return null;
 	} else {
 		return (

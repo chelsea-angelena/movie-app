@@ -2,20 +2,26 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet, View } from 'react-native';
 import { Image, Text, Card } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import colors from '../../style/colors';
+import colors from '../../styles/colors';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const ListItem = ({ item, title, year, imageUri, id }) => {
 	const navigation = useNavigation();
-	const movieItemId = { id };
+	let movieItemId = id;
+
 
 	return (
 		<Card
 			wrapperStyle={{ color: colors.white }}
-			containerStyle={{ backgroundColor: colors.grey }}
+			containerStyle={{
+				backgroundColor: colors.grey,
+				width: 400,
+				alignSelf: 'center',
+			}}
 			style={styles.card}
 		>
 			<Card.Title style={styles.title}>{title}</Card.Title>
-			<Card.Title style={styles.subtitle}>{year}</Card.Title>
+			{/* <Card.Title style={styles.subtitle}>{year}</Card.Title> */}
 			<Card.Divider style={styles.divider} />
 			{/* <View> */}
 			{/* <TouchableOpacity
@@ -29,6 +35,7 @@ const ListItem = ({ item, title, year, imageUri, id }) => {
 				source={{ uri: imageUri }}
 				onPress={() => navigation.navigate('Modal', { movieItemId })}
 			/>
+
 			{/* // </TouchableOpacity> */}
 			{/* </View> */}
 		</Card>
@@ -39,7 +46,7 @@ export default ListItem;
 
 const styles = StyleSheet.create({
 	wrapper: {
-		width: '100%',
+		// width: '100%',
 		backgroundColor: colors.grey,
 	},
 	card: {

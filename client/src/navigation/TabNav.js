@@ -9,6 +9,7 @@ import StackNav from './StackNav';
 import MyList from '../screens/NomineeMyList';
 import { Feather } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import LogOut from './LogOut.js';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -46,6 +47,21 @@ export default function TabNav({ user }) {
 					headerShown: false,
 					tabBarIcon: ({ color }) => (
 						<MaterialCommunityIcons name='heart' color='white' size={26} />
+					),
+				}}
+			/>
+			<Tab.Screen
+				name='Log Out'
+				component={LogOut}
+				options={{
+					tabBarLabel: 'Log Out',
+					headerShown: false,
+					tabBarIcon: ({ color }) => (
+						<MaterialCommunityIcons
+							name='exit-to-app'
+							color='white'
+							size={26}
+						/>
 					),
 				}}
 			/>

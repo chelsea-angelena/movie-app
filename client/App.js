@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNav from './src/navigation/TabNav';
 import { navigationRef } from './RootNavigation';
 import { Provider as MovieProvider } from './src/Context/MovieContext';
+import { UserProvider, UserContext } from './src/Context/UserContext';
+import { Provider as MovieListProvider } from './src/Context/MovieListContext';
 import { Platform } from 'react-native';
 import { Button, colors, ThemeProvider } from 'react-native-elements';
 import theme from './theme.js';
@@ -19,10 +21,8 @@ const customFonts = {
 	'Montserrat-Light': require('./assets/Montserrat/Montserrat-Light.ttf'),
 };
 
-export const UserContext = React.createContext();
-
 function App() {
-	let [user, loading] = useAuth();
+	let [user] = useAuth();
 	let [fontsLoaded] = useFonts({
 		'Montserrat-Light': require('./assets/Montserrat/Montserrat-Light.ttf'),
 	});
@@ -30,20 +30,19 @@ function App() {
 	if (!fontsLoaded) {
 		return <AppLoading />;
 	}
-	if (loading) {
-		return null;
-	}
 	return (
 		<>
-			<UserContext.Provider user={user}>
+			<UserProvider>
 				<ThemeProvider useDark={colorScheme === 'dark'}>
 					<MovieProvider>
-						<NavigationContainer ref={navigationRef}>
-							{!user ? <AuthStack /> : <TabNav user={user} />}
-						</NavigationContainer>
+						<MovieListProvider>
+							<NavigationContainer ref={navigationRef}>
+								{!user ? <AuthStack /> : <TabNav user={user} />}
+							</NavigationContainer>
+						</MovieListProvider>
 					</MovieProvider>
 				</ThemeProvider>
-			</UserContext.Provider>
+			</UserProvider>
 		</>
 	);
 }

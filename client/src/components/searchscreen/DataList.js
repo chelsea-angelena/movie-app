@@ -8,23 +8,24 @@ import {
 } from 'react-native';
 import ListItem from './ListItem';
 import { useNavigation } from '@react-navigation/native';
+import colors from '../../styles/colors';
 
 const DataList = ({ results }) => {
 	const navigation = useNavigation();
-	let DATA = results;
+	console.log(results.data);
 	return (
 		<View>
 			<Text> List Page</Text>
 			<FlatList
 				showsVerticalScrollIndicator={false}
-				data={DATA}
-				keyExtractor={(item) => item.imdbId}
+				data={results}
+				keyExtractor={(results) => results.imdbID}
 				renderItem={({ item }) => {
 					return (
 						<TouchableOpacity
 							onPress={() =>
 								navigation.navigate('Modal', {
-									id,
+									imdbID,
 									title,
 									item,
 								})

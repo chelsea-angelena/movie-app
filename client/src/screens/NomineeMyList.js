@@ -1,71 +1,87 @@
-import React, { useState, useContext } from 'react';
-import { Image, Button, Text, Card } from 'react-native-elements';
+import React, { useState, useEffect, useContext } from 'react';
+import { Image, Button, Card } from 'react-native-elements';
 import {
+	ImageBackground,
 	SafeAreaView,
 	ScrollView,
 	View,
+	Text,
 	TouchableOpacity,
 	StyleSheet,
 	FlatList,
 } from 'react-native';
-import { Context as MovieContext } from '../Context/MovieContext';
-
+import { Context as MovieListContext } from '../Context/MovieListContext';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import useAuth from '../hooks/useAuth';
+import * as db from '../../config/firebaseConfig';
+import SavedItem from './SavedItem';
+import { UserContext } from '../Context/UserContext';
 let indexTitle = 'My Saved Movies';
+import { Dimensions } from 'react-native';
 
-export default function MyList() {
-	const { state } = useContext(MovieContext);
-	console.log(state, 'state of movie in list');
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+export default function MyList({ route, navigation }) {
+	// const { state } = useContext(MovieContext);
+	const [movieList, setMovieList] = useState([]);
+	// const { state } = useContext(MovieListContext);
+	const user = useContext(UserContext);
+	const userId = user.uid;
+	// const uid = user.uid;
+
+	const getSavedMovieList = async () => {
+		try {
+			let response = await db.getSavedMovies(userId);
+			setMovieList(response);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
+	useEffect(() => {
+		getSavedMovieList();
+	}, []);
+	if (!userId) {
+		return <Text>Loading...</Text>;
+	}
 	return (
 		<SafeAreaView style={styles.view}>
-			<Text style={styles.text}>{indexTitle}</Text>
-			<FlatList
-				data={state}
-				keyExtractor={(id) => id}
-				renderItem={({ item }) => {
-					return (
-						<ListItem
-							item={item}
-							title={item.title}
-							id={item.id}
-							imageUri={item.imageUri}
-							// chevron
-						/>
-						// 	{/* <Text>{item.title}</Text>
-						// 	<Image
-						// 		source={{ uri: item.imageUri }}
-						// 		style={{ width: 200, height: 200 }}
-						// 		alt=''
-						// 	/> */}
-						// // </>
-					);
+			<ImageBackground
+				alt='theatre'
+				style={{ resizeMode: 'cover', width: '100%', height: windowHeight }}
+				source={{
+					uri:
+						'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
 				}}
-			/>
+			>
+				<Text style={styles.text}>{indexTitle}</Text>
+				<FlatList
+					data={movieList}
+					keyExtractor={(state) => state.id}
+					renderItem={({ item }) => {
+						return <SavedItem item={item} userId={userId} />;
+					}}
+				/>
+			</ImageBackground>
 		</SafeAreaView>
 	);
 }
 
-const ListItem = ({ title, imageUri, id }) => {
-	console.log(title, imageUri, id);
-	return (
-		<View style={styles.view}>
-			<Text style={styles.text}>{title}</Text>
-			<Image source={{ uri: imageUri }} alt='' style={styles.image} />
-		</View>
-	);
-};
-
 const styles = StyleSheet.create({
 	view: {
-		flex: 1,
+		// flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
 		width: '100%',
-		flex: 2,
-		backgroundColor: 'black',
+		height: windowHeight,
+		// flex: 2,
 	},
 	text: {
 		color: 'white',
 		fontSize: 24,
+		alignSelf: 'center',
+		fontWeight: 'bold',
 	},
 	image: {
 		width: 300,

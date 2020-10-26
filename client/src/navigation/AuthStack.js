@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SignInScreen, SignUpScreen } from '../screens/Auth';
+import colors from '../styles/colors';
 
 const Stack = createStackNavigator();
 
@@ -10,12 +11,14 @@ export default function AuthStack() {
 			<Stack.Screen
 				name='SignInScreen'
 				component={SignInScreen}
-				options={{ title: 'Sign In' }}
+				headerStyle={{ backgroundColor: colors.grey }}
+				options={{ title: 'Sign In', headerTransparent: true }}
 			/>
 			<Stack.Screen
 				name='SignUpScreen'
 				component={SignUpScreen}
-				options={{ title: 'Sign Up' }}
+				headerStyle={{ backgroundColor: colors.grey }}
+				options={{ title: 'Sign Up', headerTransparent: true }}
 			/>
 		</Stack.Navigator>
 	);
