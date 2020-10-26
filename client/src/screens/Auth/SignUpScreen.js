@@ -1,6 +1,13 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
-import { ImageBackground, ScrollView, StyleSheet, View } from 'react-native';
+import {
+	ImageBackground,
+	ScrollView,
+	StyleSheet,
+	Dimensions,
+	View,
+	Image,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation } from '@react-navigation/native';
 import * as db from '../../../config/firebaseConfig';
@@ -10,7 +17,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { CheckBox, Button } from 'react-native-elements';
 import ErrorMessage from './ErrorMessage';
-
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 import colors from '../../styles/colors';
 
 const validationSchema = Yup.object().shape({
@@ -47,59 +55,70 @@ const SignUpScreen = () => {
 
 	const handleSignUp = async (values) => {
 		const { email, password, displayName } = values;
-		try {
+		// try {
 			const response = await db.signupWithEmail(email, password);
-			setUserId(response.user.uid);
-			setUserEmail(response.user.email);
+			// setUserId(response.user.uid);
+			// setUserEmail(response.user.email);
 			await db.createNewUser({
 				email: response.user.email,
 				uid: response.user.uid,
 				displayName: displayName,
 			});
-			setUser(response);
-		} catch (error) {
-			setError(error.message);
-		} finally {
-			setSubmitting(false);
-		}
+			// setUser(response);
+		// } catch (error) {
+		// 	setError(error.message);
+		// } finally {
+		// 	setSubmitting(false);
+		// }
 	};
 
 	return (
 		<KeyboardAwareScrollView>
 			<ImageBackground
 				alt='theatre'
-				style={{ resizeMode: 'cover' }}
+				style={{ resizeMode: 'cover', height: windowHeight }}
 				source={{
 					uri:
 						'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
 				}}
 			>
-				<View style={styles.container}>
-					<Formik
-						initialValues={{
-							displayName: '',
-							email: '',
-							password: '',
-							confirmPassword: '',
-							check: false,
-						}}
-						onSubmit={(values) => {
-							handleSignUp(values);
-						}}
-						validationSchema={validationSchema}
-					>
-						{({
-							handleChange,
-							values,
-							handleSubmit,
-							errors,
-							isValid,
-							touched,
-							handleBlur,
-							isSubmitting,
-							setFieldValue,
-						}) => (
-							<>
+				{/* <View style={styles.container}> */}
+				<Formik
+					initialValues={{
+						displayName: '',
+						email: '',
+						password: '',
+						confirmPassword: '',
+						check: false,
+					}}
+					onSubmit={(values) => {
+						handleSignUp(values);
+					}}
+					validationSchema={validationSchema}
+				>
+					{({
+						handleChange,
+						values,
+						handleSubmit,
+						errors,
+						isValid,
+						touched,
+						handleBlur,
+						isSubmitting,
+						setFieldValue,
+					}) => (
+						<>
+							<Image
+								source={require('../../../assets/appLogo.png')}
+								style={{
+									minHeight: 200,
+									minWidth: 400,
+									alignSelf: 'center',
+									marginTop: 64,
+								}}
+								alt='movie'
+							/>
+							<View style={styles.innerView}>
 								<FormInput
 									displayName='displayName'
 									value={values.displayName}
@@ -149,14 +168,13 @@ const SignUpScreen = () => {
 									errorValue={touched.confirmPassword && errors.confirmPassword}
 								/>
 								<CheckBox
-									containerStyle={styles.checkBoxContainer}
+									style={styles.checkBoxContainer}
 									checkedIcon='check-box'
 									iconType='material'
 									uncheckedIcon='check-box-outline-blank'
 									title='Agree to terms and conditions'
 									checkedTitle='You agreed to our terms and conditions'
 									checked={values.check}
-									style={{ color: colors.white }}
 									onPress={() => setFieldValue('check', !values.check)}
 								/>
 								<View style={styles.buttonContainer}>
@@ -168,21 +186,23 @@ const SignUpScreen = () => {
 										disabled={!isValid || isSubmitting}
 										loading={isSubmitting}
 										style={{ color: colors.white }}
+										backgroundColor={colors.red}
 									/>
 								</View>
 								<ErrorMessage errorValue={errors.general} />
-							</>
-						)}
-					</Formik>
-					<Button
-						title='Have an account? Login'
-						onPress={goToLogIn}
-						titleStyle={{
-							color: colors.white,
-						}}
-						type='clear'
-					/>
-				</View>
+							</View>
+						</>
+					)}
+				</Formik>
+				<Button
+					title='Have an account? Login'
+					onPress={goToLogIn}
+					titleStyle={{
+						color: colors.white,
+					}}
+					type='clear'
+				/>
+				{/* </View> */}
 			</ImageBackground>
 		</KeyboardAwareScrollView>
 	);
@@ -191,12 +211,7 @@ const SignUpScreen = () => {
 export default SignUpScreen;
 
 const styles = StyleSheet.create({
-	container: {
-		backgroundColor: colors.grey,
-		paddingTop: 15,
-		height: 1000,
-		marginTop: 64,
-	},
+
 	buttonContainer: {
 		margin: 25,
 	},
@@ -208,7 +223,17 @@ const styles = StyleSheet.create({
 		margin: 25,
 	},
 	checkBoxContainer: {
-		backgroundColor: colors.white,
+		backgroundColor: colors.black,
 		borderColor: '#fff',
+
+	},
+	innerView: {
+		maxWidth: 500,
+		minWidth: 320,
+		width: '100%',
+		flex: 1,
+		alignSelf: 'center',
+		backgroundColor: 'rgba(0,0,0,.8)',
+		padding: 32,
 	},
 });

@@ -1,14 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Alert, StyleSheet, View, Text, ScrollView } from 'react-native';
+import {
+	ImageBackground,
+	Alert,
+	StyleSheet,
+	View,
+	Text,
+	ScrollView,
+} from 'react-native';
 import { Button, Card } from 'react-native-elements';
 import { Dimensions } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { API_KEY } from '../../env';
-import colors from '../style/colors';
+import colors from '../styles/colors';
 import { AuthContext } from '../Context/AuthContext';
 import * as db from '../../config/firebaseConfig';
-
+import FormButton from '../screens/Auth/FormButton';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -56,56 +65,74 @@ function ModalScreen(props, { route }) {
 		return null;
 	} else {
 		return (
-			<ScrollView>
-				<View style={styles.view}>
-					<Card
-						wrapperStyle={{ color: colors.white }}
-						containerStyle={{ backgroundColor: colors.grey }}
-					>
-						<Card.Image
-							source={{ uri: data.Poster }}
-							alt=''
-							resizeMode='cover'
-							style={styles.image}
-						/>
-						<Card.Title>{data.Title}</Card.Title>
-						<Card.Divider />
-						<View style={styles.container}>
-							<Text style={styles.h4}>{data.Year}</Text>
-							<Text style={styles.boldText}>Actors: </Text>
-							<Text style={styles.h4}>{data.Actors}</Text>
-							<Text style={styles.boldText}>Actors: </Text>
-							<Text style={styles.h4}>{data.Awards}</Text>
-							<Text style={styles.boldText}>Box-Office: </Text>
-							<Text style={styles.h4}>{data.BoxOffice}</Text>
-							<Text style={styles.boldText}>Director: </Text>
-							<Text style={styles.h4}>{data.Director}</Text>
-							<Text style={styles.boldText}>Genre: </Text>
-							<Text style={styles.h4}>{data.Genre}</Text>
-							<Text style={styles.boldText}>Plot: </Text>
-							<Text style={styles.h4}>{data.Plot}</Text>
-							<Text style={styles.boldText}>Rated: </Text>
-							<Text style={styles.h4}>{data.Rated}</Text>
-							{data.Website === true ? (
-								<Text style={styles.h4}>{data.Website}</Text>
-							) : null}
-							<Text style={styles.boldText}>Plot: </Text>
-							<Text style={styles.h4}>imdb rating: {data.imdbRating}</Text>
-						</View>
-					</Card>
-				</View>
+			<ScrollView style={{ backgroundColor: colors.black }}>
+				<ImageBackground
+					alt='theatre'
+					style={{ resizeMode: 'cover', height: windowHeight }}
+					source={{
+						uri:
+							'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
+					}}
+				>
+					<View style={styles.innerView}>
+						<Card
+							wrapperStyle={{ color: colors.white }}
+							containerStyle={{ backgroundColor: colors.grey }}
+						>
+							<Card.Image
+								source={{ uri: data.Poster }}
+								alt=''
+								resizeMode='cover'
+								style={styles.image}
+							/>
+							<Card.Title>{data.Title}</Card.Title>
+							<Card.Divider />
+							<View style={styles.container}>
+								<Text style={styles.h4}>{data.Year}</Text>
+								<Text style={styles.boldText}>Actors: </Text>
+								<Text style={styles.h4}>{data.Actors}</Text>
+								<Text style={styles.boldText}>Actors: </Text>
+								<Text style={styles.h4}>{data.Awards}</Text>
+								<Text style={styles.boldText}>Box-Office: </Text>
+								<Text style={styles.h4}>{data.BoxOffice}</Text>
+								<Text style={styles.boldText}>Director: </Text>
+								<Text style={styles.h4}>{data.Director}</Text>
+								<Text style={styles.boldText}>Genre: </Text>
+								<Text style={styles.h4}>{data.Genre}</Text>
+								<Text style={styles.boldText}>Plot: </Text>
+								<Text style={styles.h4}>{data.Plot}</Text>
+								<Text style={styles.boldText}>Rated: </Text>
+								<Text style={styles.h4}>{data.Rated}</Text>
+								{data.Website === true ? (
+									<Text style={styles.h4}>{data.Website}</Text>
+								) : null}
+								<Text style={styles.boldText}>Plot: </Text>
+								<Text style={styles.h4}>imdb rating: {data.imdbRating}</Text>
+							</View>
+						</Card>
+					</View>
 
-				<View style={styles.buttonContainer}>
-					{!button ? (
-						<Button
-							style={styles.button}
-							title='Already Selected'
-							onPress={() => Alert.alert('already Nominated')}
-						/>
-					) : (
-						<Button title='Select' style={styles.button} onPress={onAddMovie} />
-					)}
-				</View>
+					<View style={styles.buttonContainer}>
+						{!button ? (
+							<FormButton
+								buttonType='outline'
+								title='Already Selected'
+								onPress={() => Alert.alert('already Nominated')}
+								buttonColor={colors.white}
+								backgroundColor={colors.red}
+							/>
+						) : (
+							<FormButton
+								buttonType='outline'
+								title='Select'
+								style={styles.button}
+								onPress={onAddMovie}
+								buttonColor={colors.white}
+								backgroundColor={colors.red}
+							/>
+						)}
+					</View>
+				</ImageBackground>
 			</ScrollView>
 		);
 	}
@@ -119,9 +146,7 @@ const styles = StyleSheet.create({
 	card: {
 		width: screenWidth,
 	},
-	view: {
-		flex: 1,
-	},
+
 	h4: {
 		fontSize: 14,
 		lineHeight: 14 * 1.5,
@@ -138,25 +163,29 @@ const styles = StyleSheet.create({
 	},
 	buttonContainer: {
 		margin: 16,
+		maxWidth: 500,
+		minWidth: 320,
+		width: '100%',
+		backgroundColor: colors.black,
+		alignSelf: 'center',
 	},
 
-	button: {
-		color: 'white',
-		backgroundColor: 'hsl(210, 4%, 29%)',
-		marginLeft: 24,
-		marginRight: 24,
-	},
+	// button: {
+	// 	color: 'white',
+
+	// 	marginLeft: 24,
+	// 	marginRight: 24,
+	// },
 	text: {
 		color: 'white',
 		padding: 2.5,
 	},
+	innerView: {
+		maxWidth: 500,
+		minWidth: 320,
+		width: '100%',
+		alignSelf: 'center',
+	},
 });
 
-// const mapStateToProps = (state) => ({
-// 	movies: state.movie,
-// });
-// ModalScreen.propTypes = {
-// 	setMovie: PropTypes.func.isRequired,
-// };
-// export default connect(mapStateToProps)(Movie);
 export default ModalScreen;
