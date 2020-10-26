@@ -306,3 +306,15 @@ config
 /config/firebaseConfig
 /client/src/config/firebaseConfig
 firebaseConfig.js
+googleConfig
+googleConfig.js
+config/googleConfig.js
+config/googleConfig
+/config/googleConfig
+/config/googleConfig.js
+./config/googleConfig
+./config/googleConfig.js
+client/config/googleConfig
+client/config/googleConfig.js
+/client/config/googleConfig.js
+/client/config/googleConfig
