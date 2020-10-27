@@ -11,7 +11,6 @@ const SavedItem = ({ item, userId }) => {
 
 	const deleteMovie = async () => {
 		await db.deleteMovieItem(userId, movieId, navigation);
-		navigation.navigate('MyList');
 	};
 	return (
 		<View style={styles.view}>

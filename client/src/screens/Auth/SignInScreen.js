@@ -33,14 +33,14 @@ const validationSchema = Yup.object().shape({
 const SignInScreen = () => {
 	const [submitting, setSubmitting] = useState(false);
 	const user = useContext(AuthContext);
+
 	const [error, setError] = useState(null);
 	const navigation = useNavigation();
 	const goToSignup = () => navigation.navigate('SignUpScreen');
 
 	const handleLogin = async (values) => {
 		const { email, password } = values;
-
-		await db.loginWithEmail(email, password);
+		let result = await db.loginWithEmail(email, password);
 	};
 
 	return (
@@ -77,8 +77,8 @@ const SignInScreen = () => {
 							<Image
 								source={require('../../../assets/appLogo.png')}
 								style={{
-									minHeight: 200,
-									minWidth: 400,
+									minHeight: 100,
+									minWidth: 300,
 									alignSelf: 'center',
 									marginTop: 64,
 								}}
@@ -86,7 +86,6 @@ const SignInScreen = () => {
 							/>
 							<View style={styles.innerView}>
 								<FormInput
-									style={{ color: colors.white }}
 									name='email'
 									value={values.email}
 									onChangeText={handleChange('email')}

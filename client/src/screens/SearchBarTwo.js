@@ -7,6 +7,7 @@ import DataList from '../components/searchscreen/DataList';
 import { API_KEY } from '../../env';
 import colors from '../styles/colors';
 import AppText from '../components/Text.js';
+import restApi from '../api/restApi';
 const MySearchBar = () => {
 	const [searchInput, setSearchInput] = useState('');
 	const [searchTerm, setSearchTerm] = useState('');
@@ -16,6 +17,19 @@ const MySearchBar = () => {
 	const updateSearch = (searchTerm) => {
 		setSearchTerm(searchTerm);
 	};
+
+	// const submitSearch = async () => {
+	// 	try {
+	// 		let response = await restApi({
+	// 			method: 'get',
+	// 			url: '/movies',
+	// 			data: searchTerm,
+	// 		});
+	// 		console.log(response);
+	// 	} catch (e) {
+	// 		console.log(e);
+	// 	}
+	// };
 
 	const submitSearch = async () => {
 		try {
@@ -44,6 +58,7 @@ const MySearchBar = () => {
 						placeholder='Type Here to Search...'
 						onChangeText={updateSearch}
 						value={searchTerm}
+						style={{ color: colors.white }}
 					/>
 					<AppText>{searchTerm}</AppText>
 				</View>

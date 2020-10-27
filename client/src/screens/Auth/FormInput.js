@@ -2,6 +2,7 @@ import React from 'react';
 import { Input } from 'react-native-elements';
 import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import colors from '../../styles/colors';
 
 const FormInput = ({
 	iconName,
@@ -16,10 +17,9 @@ const FormInput = ({
 		<Input
 			{...rest}
 			leftIcon={<Ionicons name={iconName} size={28} color={iconColor} />}
-			placeholderTextColor='grey'
+			placeholderTextColor='white'
 			name={name}
 			placeholder={placeholder}
-			style={styles.input}
 		/>
 	</View>
 );
